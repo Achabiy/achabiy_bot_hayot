@@ -22,16 +22,16 @@ def send_welcome(message):
 def handle_message(message):
     if message.text == "📝 KUNLIK VAZIFALAR":
         vazifalar = (
-            "✅ Ertalab 5:00 da uyg‘onish\n"
-            "✅ Sovuq suvda yuzni yuvish\n"
-            "✅ 20 daqiqa badantarbiya\n"
-            "✅ 1 soat kitob o‘qish\n"
-            "✅ Reja asosida kunni boshlash\n"
-            "✅ Tanaffusda chuqur nafas olish\n"
-            "✅ Harakatda bo‘lish va dangasalikdan qochish\n"
-            "✅ Kun yakunida qisqa hisobot yozish"
+            "📋 BUGUNGI VAZIFALAR:\n\n"
+            "1. Tongda 10 daqiqa meditatsiya qilish 🧘‍♂️\n"
+            "2. Bugungi 3 ta maqsadingni yozib chiq 📓\n"
+            "3. 25 daqiqa davomida muhim vazifa ustida ishlash 🕒\n"
+            "4. 10 daqiqa tanaffus qilish ☕\n"
+            "5. Kamida 5 sahifa kitob o‘qish 📖\n"
+            "6. Shaxsiy rivojlanishga 30 daqiqa vaqt ajrat 🎯\n"
+            "7. Yotishdan oldin kunni tahlil qilish 🌙"
         )
-        bot.send_message(message.chat.id, f"KUNLIK VAZIFALAR:\n\n{vazifalar}")
+        bot.send_message(message.chat.id, vazifalar)
     
     elif message.text == "📌 MUHIM ESLATMALAR":
         eslatmalar = (
