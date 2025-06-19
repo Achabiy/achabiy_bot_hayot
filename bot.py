@@ -1,32 +1,53 @@
 import telebot
 from telebot import types
-import datetime
 
-TOKEN = "7642791863:AAG3IhwDMjPwsDIhF85BVa8rkw4gVqvtzDg"
-bot = telebot.TeleBot(TOKEN)
+# TOKEN
+bot = telebot.TeleBot("7642791863:AAG3IhwDMjPwsDIhF85BVa8rkw4gVqvtzDg")
 
-checklists = {
-    "Monday": ["📖 Kitob o'qish", "💪 Sport bilan shug‘ullanish", "🧠 Yangi narsa o‘rganish", "🧹 Xonani tartibga keltirish"],
-    "Tuesday": ["📚 Dars qilish", "📅 Reja tuzish", "🧘‍♂️ Meditatsiya", "📥 Mail tekshirish"],
-    "Wednesday": ["🏃‍♂️ Yengil yugurish", "📘 Kitob yozish", "🎧 Podcast tinglash", "🛍 Zaruriy xaridlar"],
-    "Thursday": ["📖 Qur'on o‘qish", "🖋 Yozuv mashqlari", "💼 Portfolioni yangilash", "📷 Rasmlar arxivlash"],
-    "Friday": ["🕌 Juma namozi", "📓 Haftani tahlil qilish", "🎯 Maqsadlarni qayta ko‘rib chiqish", "🍲 Oila bilan ovqatlanish"],
-    "Saturday": ["🧹 Uy tozalash", "🎮 Sevimli o‘yin", "👨‍👩‍👧 Oila bilan vaqt", "🛀 Dam olish"],
-    "Sunday": ["📝 Yozuv ishlari", "🎥 Kino ko‘rish", "📖 Yangi maqola o‘qish", "📲 Telefonni tozalash"]
-}
-
-@bot.message_handler(commands=['start'])
+# Boshlanishda salomlashish
+@bot.message_handler(commands=['start', 'help'])
 def send_welcome(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    item = types.KeyboardButton("📋 Bugungi checklist")
-    markup.add(item)
-    bot.send_message(message.chat.id, f"Salom {message.from_user.first_name}! ✅ \nKunlik motivatsion botga xush kelibsan!", reply_markup=markup)
+    btn1 = types.KeyboardButton("📝 KUNLIK VAZIFALAR")
+    btn2 = types.KeyboardButton("📌 MUHIM ESLATMALAR")
+    markup.add(btn1, btn2)
+    bot.send_message(
+        message.chat.id,
+        f"Salom {message.from_user.first_name}! ✅\nKunlik motivatsion botga xush kelibsan!",
+        reply_markup=markup
+    )
 
-@bot.message_handler(func=lambda message: message.text == "📋 Bugungi checklist")
-def send_checklist(message):
-    today = datetime.datetime.now().strftime("%A")
-    tasks = checklists.get(today, ["Bugun uchun belgilangan topshiriqlar yo‘q."])
-    checklist_text = f"📅 <b>{today}</b> uchun vazifalar:\n\n" + "\n".join([f"▫️ {task}" for task in tasks])
-    bot.send_message(message.chat.id, checklist_text, parse_mode='HTML')
+# Tugmalar bo‘yicha javob
+@bot.message_handler(func=lambda message: True)
+def handle_message(message):
+    if message.text == "📝 KUNLIK VAZIFALAR":
+        vazifalar = (
+            "✅ Ertalab 5:00 da uyg‘onish\n"
+            "✅ Sovuq suvda yuzni yuvish\n"
+            "✅ 20 daqiqa badantarbiya\n"
+            "✅ 1 soat kitob o‘qish\n"
+            "✅ Reja asosida kunni boshlash\n"
+            "✅ Tanaffusda chuqur nafas olish\n"
+            "✅ Harakatda bo‘lish va dangasalikdan qochish\n"
+            "✅ Kun yakunida qisqa hisobot yozish"
+        )
+        bot.send_message(message.chat.id, f"KUNLIK VAZIFALAR:\n\n{vazifalar}")
+    
+    elif message.text == "📌 MUHIM ESLATMALAR":
+        eslatmalar = (
+            "📍 Vaqtingni qadrlagin\n"
+            "📍 Har bir kun — imkoniyat\n"
+            "📍 Shaxsiy o‘sishga sodiq qol\n"
+            "📍 Salbiy fikrlardan uzoq yur\n"
+            "📍 O‘zingga ishongan holda harakat qil"
+        )
+        bot.send_message(message.chat.id, f"MUHIM ESLATMALAR:\n\n{eslatmalar}")
+    
+    else:
+        bot.send_message(message.chat.id, "Nomaʼlum buyruq! Tugmalardan foydalaning.")
 
-bot.polling()
+# Ishga tushganini ko‘rsatish
+print("Bot ishga tushdi...")
+
+# Botni boshlash
+bot.polling(non_stop=True)
