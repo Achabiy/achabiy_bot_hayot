@@ -1,0 +1,19 @@
+bot.py
+import telebot
+from datetime import datetime
+
+TOKEN = "7642791863:AAG3IhwDMjPwsDIhF85BVa8rkw4gVqvtzDg"
+bot = telebot.TeleBot(TOKEN)
+
+@bot.message_handler(commands=['start'])
+def send_welcome(message):
+    bot.reply_to(message, "Assalomu alaykum, Achabiy! 💪\nBot ishga tushdi!")
+
+@bot.message_handler(commands=['kun'])
+def kun_rejasi(message):
+    today = datetime.now().strftime('%A, %d-%m-%Y')
+    reply = f"📅 Bugun: {today}\n\n✅ Tonggi duoni o‘qish\n✅ Bedor bo‘lish\n✅ O‘z ustingda ishlash\n✅ Kamida 1 foydali ish\n✅ Allohni zikr qilish\n✅ Oilangga yaxshilik qilish\n✅ Tun tinch uxlash"
+    bot.reply_to(message, reply)
+
+print("✅ Bot ishga tushdi...")
+bot.polling()
